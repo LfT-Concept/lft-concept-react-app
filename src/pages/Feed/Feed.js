@@ -60,7 +60,12 @@ class Feed extends Component {
       .then(resData => {
         console.log(`loadPosts :`, resData);
         this.setState({
-          posts: resData.posts,
+          posts: resData.posts.map(post => {
+            return {
+              ...post,
+              imagePath: post.imageUrl
+            }
+          }),
           totalPosts: resData.totalItems,
           postsLoading: false
         });
@@ -114,7 +119,8 @@ class Feed extends Component {
     let url = `${process.env.REACT_APP_REST_API}/feed/posts`;
     let method = 'POST';
     if (this.state.editPost) {
-      url = 'URL';
+      url = `${process.env.REACT_APP_REST_API}/feed/post/${this.state.editPost._id}`;
+      method = 'PUT';
     }
 
     console.log(url, method);
