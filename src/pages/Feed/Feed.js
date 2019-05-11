@@ -115,7 +115,7 @@ class Feed extends Component {
     formData.append('title', postData.title);
     formData.append('content', postData.content);
     formData.append('image', postData.image);
-    
+
     let url = `${process.env.REACT_APP_REST_API}/feed/posts`;
     let method = 'POST';
     if (this.state.editPost) {
@@ -130,7 +130,7 @@ class Feed extends Component {
       // FormData() sets the correct headers
       body: formData
     })
-    .then(res => {
+      .then(res => {
         if (res.status !== 200 && res.status !== 201) {
           throw new Error('Creating or editing a post failed!');
         }
@@ -180,7 +180,9 @@ class Feed extends Component {
 
   deletePostHandler = postId => {
     this.setState({ postsLoading: true });
-    fetch('URL')
+    fetch(`${process.env.REACT_APP_REST_API}/feed/post/${postId}`, {
+      method: 'DELETE'
+    })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
           throw new Error('Deleting a post failed!');
