@@ -127,10 +127,11 @@ class Feed extends Component {
       method = 'PUT';
     }
 
-    console.log(url, method);
-
     fetch(url, {
       method: method,
+      headers: {
+        Authorization: `Bearer ${this.props.token}`
+      },
       // FormData() sets the correct headers
       body: formData
     })
@@ -185,7 +186,10 @@ class Feed extends Component {
   deletePostHandler = postId => {
     this.setState({ postsLoading: true });
     fetch(`${process.env.REACT_APP_REST_API}/feed/post/${postId}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${this.props.token}`
+      }
     })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
